@@ -24,3 +24,9 @@ while inp != "":
     count = int(input('Enter the count : '))
     send_msg(driver, name, msg, count)
     inp = input('Enter 1 to continue: ')
+    
+options = driver.find_element_by_xpath('//div[@title="Menu"]')
+options.click()
+logout = driver.find_element_by_xpath('/html/body/div[1]/div/div/div[3]/div/header/div[2]/div/span/div[3]/span/div/ul/li[6]/div')
+time.sleep(2)
+logout.click()
