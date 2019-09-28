@@ -53,4 +53,9 @@ while inp != "":
             elif msg.lower() == "ok" and tick_mark == []:
                 send_msg(driver, msg_sender, "OK", 1)
         time.sleep(10)  
+options = driver.find_element_by_xpath('//div[@title="Menu"]')
+options.click()
+logout = driver.find_element_by_xpath('/html/body/div[1]/div/div/div[3]/div/header/div[2]/div/span/div[3]/span/div/ul/li[6]/div')
+time.sleep(2)
+logout.click() 
 driver.close()
