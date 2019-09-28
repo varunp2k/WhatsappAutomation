@@ -3,14 +3,39 @@ import selenium
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.firefox.webdriver import FirefoxProfile
 import os
 import urllib.request
 import time
+import pickle
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 DRIVER_BIN = os.path.join(PROJECT_ROOT, "geckodriver")
+LOCALSTORAGE_PATH = "localstorages.pkl"
+
 driver = webdriver.Firefox(executable_path = DRIVER_BIN)
+def save_localstorage(driver, path):
+    with open(path, 'wb') as filehandler:
+        localstorage = dict(driver.execute_script( \
+            "var ls = window.localStorage, items = {}; " \
+            "for (var i = 0, k; i < ls.length; ++i) " \
+            "  items[k = ls.key(i)] = ls.getItem(k); " \
+            "return items; "))
+        pickle.dump(localstorage, filehandler)
+
+def load_localstorage(driver, path):
+     with open(path, 'rb') as localstoragesfile:
+         localstorages = dict(pickle.load(localstoragesfile))
+         for key, value in localstorages.items():
+            #  driver.add_localstorage(localstorage)
+            driver.execute_script("window.localStorage.setItem(arguments[0], arguments[1]);", key, value)
+# print("1. Load localstorages\n2. Don't load localstorages\nInput: ", end="")
+# choice = int(input())
 driver.get('https://web.whatsapp.com/')
+# if choice == 1:
+if os.path.isfile(LOCALSTORAGE_PATH):
+    load_localstorage(driver, LOCALSTORAGE_PATH)
+driver.get(driver.current_url)
 default_contact = "A1"
 messages_dict = {"hi": "Hello", "ok": "OK", "namaste": "Saadar pranam", "hello":"Hi"}
 
@@ -52,7 +77,9 @@ def reply_to_messages(driver, name, messages_dict, msg, tick_mark, sending_clock
 # src = img.get_attribute('src')
 # urllib.request.urlretrieve(src, "captcha.png")
 inp = " "
-input("Press any key after QR code scan")
+# input("Press any key after QR code scan")
+WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.XPATH, '//*[@id="side"]')))
+save_localstorage(driver, LOCALSTORAGE_PATH)
 allchats = driver.find_elements_by_xpath("//div[contains(@style, 'z-index')]")
 allchats = [chat.get_attribute("style") for chat in allchats]
 allchats = [int(chat.split("z-index: ")[1].split(";")[0]) for chat in allchats]
@@ -91,5 +118,6 @@ while inp != "":
 
         user = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, '//span[@title = "{}"]'.format(default_contact))))
         user.click()
+        # save_localstorage(driver, LOCALSTORAGE_PATH)
         time.sleep(5)
 driver.close()
