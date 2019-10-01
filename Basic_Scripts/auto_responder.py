@@ -3,17 +3,19 @@ import selenium
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.firefox.webdriver import FirefoxProfile
 import os
 import urllib.request
 import time
 import pickle
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-DRIVER_BIN = os.path.join(PROJECT_ROOT, "geckodriver")
 LOCALSTORAGE_PATH = "localstorages.pkl"
 
-driver = webdriver.Firefox(executable_path = DRIVER_BIN)
+browser = "chrome"
+if "firefox" in browser.lower():
+    driver = webdriver.Firefox(executable_path = os.path.join(PROJECT_ROOT, "geckodriver"))
+elif "chrome" in browser.lower():
+    driver = webdriver.Chrome(executable_path = os.path.join(PROJECT_ROOT, "chromedriver"))
 def save_localstorage(driver, path):
     with open(path, 'wb') as filehandler:
         localstorage = dict(driver.execute_script( \
