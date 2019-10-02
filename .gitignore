@@ -2,3 +2,5 @@
 Basic_Scripts/geckodriver*
 
 *.pkl
+Basic_Scripts/chromedriver
+.DS_Store
