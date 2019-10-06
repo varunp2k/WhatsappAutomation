@@ -55,7 +55,8 @@ while inp != "":
         time.sleep(10)  
 options = driver.find_element_by_xpath('//div[@title="Menu"]')
 options.click()
-logout = driver.find_element_by_xpath('/html/body/div[1]/div/div/div[3]/div/header/div[2]/div/span/div[3]/span/div/ul/li[6]/div')
-time.sleep(2)
+logout_xpath = '/html/body/div[1]/div/div/div[3]/div/header/div[2]/div/span/div[3]/span/div/ul/li[6]/div'
+WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, logout_xpath)))
+logout = driver.find_element_by_xpath(logout_xpath)
 logout.click() 
 driver.close()
