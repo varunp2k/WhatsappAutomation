@@ -102,6 +102,6 @@ for i in contacts:
     msg = "Good Morning! Hope you have a great day"
     count = 1
     send_msg(driver, name, msg, count)
-    time.sleep(1.5)
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//div[@classs='_2WP9Q' and contains(., {})]//span[@data-icon='status-dblcheck']".format(i))))
 
 driver.close()
