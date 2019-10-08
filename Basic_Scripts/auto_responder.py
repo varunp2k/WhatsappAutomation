@@ -121,5 +121,5 @@ while inp != "":
         user = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, '//span[@title = "{}"]'.format(default_contact))))
         user.click()
         # save_localstorage(driver, LOCALSTORAGE_PATH)
-        time.sleep(5)
+        WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, "//div[@class='_3HZor']/span[@title='{}']".format(msg_sender))))
 driver.close()
