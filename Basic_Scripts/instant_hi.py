@@ -1,4 +1,7 @@
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import selenium
 import os
 import urllib.request
@@ -52,11 +55,9 @@ while inp != "":
                 send_msg(driver, msg_sender, "Hi", 1)
             elif msg.lower() == "ok" and tick_mark == []:
                 send_msg(driver, msg_sender, "OK", 1)
-        time.sleep(10)  
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//div[@classs='_2WP9Q' and contains(., {})]//span[@data-icon='status-dblcheck']".format(msg_sender))))
 options = driver.find_element_by_xpath('//div[@title="Menu"]')
 options.click()
-logout_xpath = '/html/body/div[1]/div/div/div[3]/div/header/div[2]/div/span/div[3]/span/div/ul/li[6]/div'
-WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, logout_xpath)))
-logout = driver.find_element_by_xpath(logout_xpath)
+logout = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div/div/div[3]/div/header/div[2]/div/span/div[3]/span/div/ul/li[6]/div')))
 logout.click() 
 driver.close()

@@ -1,7 +1,8 @@
 from selenium import webdriver
-import os
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+import os
 
 driver = webdriver.Chrome(r"add path to driver here")
 driver.get('https://web.whatsapp.com/')
@@ -29,8 +30,5 @@ while inp != "":
     
 options = driver.find_element_by_xpath('//div[@title="Menu"]')
 options.click()
-logout_xpath = '/html/body/div[1]/div/div/div[3]/div/header/div[2]/div/span/div[3]/span/div/ul/li[6]/div'
-WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, logout_xpath)))
-logout = driver.find_element_by_xpath(logout_xpath)
+logout = WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div/div/div[3]/div/header/div[2]/div/span/div[3]/span/div/ul/li[6]/div')))
 logout.click()
-
