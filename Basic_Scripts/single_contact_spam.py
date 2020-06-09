@@ -11,11 +11,11 @@ def send_msg(driver, name, msg, count):
     user = driver.find_element_by_xpath('//span[@title = "{}"]'.format(name))
     user.click()
 
-    msg_box = driver.find_element_by_class_name('_3u328')
+    msg_box = driver.find_element_by_xpath('//*[@id="main"]/footer/div[1]/div[2]/div/div[2]')
 
     for i in range(count):
         msg_box.send_keys(msg)
-        button = driver.find_element_by_class_name('_3M-N-')
+        button = driver.find_element_by_xpath('//*[@id="main"]/footer/div[1]/div[3]/button')
         button.click()
     
 
