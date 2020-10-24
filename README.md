@@ -6,7 +6,7 @@ Collection of a bunch of weird and fun whatsapp scripts.
 
 ## What is this repo?
 
-This is a compilation of a bunch of cool scripts to automate tasks inside the [whastaspp](https://web.whatsapp.com/) website!
+This is a compilation of a bunch of cool scripts to automate tasks inside the [WhatsApp](https://web.whatsapp.com/) website!
 
 This scripts are meant to make our life easier, or... just to be real fun!
 
